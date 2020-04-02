@@ -27,8 +27,9 @@ def printBoard():
     print("     |     |     ")
     print('\n'*1)
     
-
-# printBoard()
+def clearBoard(myDict):
+    for key in myDict.keys():
+        myDict[key] = " "
 
 def winOrLose(myDict):
     tRow = [myDict['7'], myDict['8'], myDict['9']]
@@ -42,22 +43,21 @@ def winOrLose(myDict):
     totalList = tRow + mRow + bRow
 
     if tRow.count('X') == 3 or tRow.count('O') == 3:
-        print(f"Congratulations! '{tRow[0]}' is the winner!")
         return True
     elif mRow.count('X') == 3 or mRow.count('O') == 3:
-        print(f"Congratulations! '{mRow[0]}' is the winner!")
+        return True
     elif bRow.count('X') == 3 or bRow.count('O') == 3:
-        print(f"Congratulations! '{bRow[0]}' is the winner!")
+        return True
     elif lCol.count('X') == 3 or lCol.count('O') == 3:
-        print(f"Congratulations! '{lCol[0]}' is the winner!")
+        return True
     elif mCol.count('X') == 3 or mCol.count('O') == 3:
-        print(f"Congratulations! '{mCol[0]}' is the winner!")
+        return True
     elif rCol.count('X') == 3 or rCol.count('O') == 3:
-        print(f"Congratulations! '{rCol[0]}' is the winner!")
+        return True
     elif diagDown.count('X') == 3 or diagDown.count('O') == 3:
-        print(f"Congratulations! '{diagDown[0]}' is the winner!")
+        return True
     elif diagUp.count('X') == 3 or diagUp.count('O') == 3:
-        print(f"Congratulations! '{diagUp[0]}' is the winner!")
+        return True
     else:
         count = 0
         for item in totalList:
@@ -68,53 +68,71 @@ def winOrLose(myDict):
 
 
 
+def game_loop():
+    print("Welcome to Tic Tac Toe")
+    player1 = input("Type 'X' or 'O' to choose you fighter: ")
 
+    if player1.lower() == 'x':
+        player2 = 'O'
+    else:
+        player2 = 'X'    
+
+    print("Player 1 will go first")
+    print("Ready Player 1? Enter 'Yes' or 'No': ")
+    startGame = input()
+
+    if startGame.lower() == 'yes':
+        printBoard()
+        while True:
+            print("Choose your next position: (1-9)")
+            p1 = input()
+            while int(p1) >= 10:
+                print("Please type in only your next position: (1-9)")
+                p1 = input()
+            
+            myDict[p1] = player1.upper()
+            printBoard()
+            
+            if winOrLose(myDict) == True:
+                print("Congratulations! You have won the game!")
+                clearBoard(myDict)
+                break
+            else:
+                print("Choose your next position: (1-9)")
+                p2 = input()
+                while int(p2) >= 10:
+                    print("Please type in only your next position: (1-9)")
+                    p2 = input()
+                
+                myDict[p2] = player2
+                printBoard()
+
+                if winOrLose(myDict) == True:
+                    print("Congratulations! You have won the game!")
+                    clearBoard(myDict)
+                    break
+
+            
+
+    elif startGame.lower() == 'no':
+        print("Goodbye")
+        return
+
+    else:
+        pass
+        return
+
+    replay = input("Do you want to play again? Enter 'Yes' or 'No': ")
+
+    if replay.lower() == 'yes':
+        game_loop()
+    else:
+        print("Goodbye")
 
 
 # Game Start
-print("Welcome to Tic Tac Toe")
-player1 = input("Type 'X' or 'O' to choose you fighter: ")
+game_loop()
 
-if player1.lower() == 'x':
-    player2 = 'O'
-else:
-    player2 = 'X'    
-
-print("Player 1 will go first")
-print("Ready Player 1? Enter 'Yes' or 'No': ")
-startGame = input()
-
-if startGame.lower() == 'yes':
-    printBoard()
-    while True:
-        print("Choose your next position: (1-9)")
-        p1 = input()
-        while int(p1) >= 10:
-            print("Please type in 'X'")
-            p1 = input()
-        
-        myDict[p1] = player1.upper()
-        printBoard()
-        winOrLose(myDict)
-        
-        if winOrLose == True:
-            break
-
-        print("Choose your next position: (1-9)")
-        p2 = input()
-        while int(p2) >= 10:
-            print("Please type in 'O'")
-            p2 = input()
-        
-        myDict[p2] = player2
-        printBoard()
-        winOrLose(myDict)
-        if winOrLose == True:
-            break
-elif startGame.lower() == 'no':
-    print("Goodbye")
-else:
-    print("Something")
 
 
     
